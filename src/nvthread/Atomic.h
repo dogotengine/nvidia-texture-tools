@@ -89,7 +89,12 @@ namespace nv {
         nvCompilerReadWriteBarrier();
         return ret;
 #else
-#error "Not implemented"
+//+DOGOT
+// Emscripten doesn't have a specific CPU.
+//#error "Not implemented"
+        uint32 ret = *ptr;
+        return ret;
+//-DOGOT
 #endif
     }
 
@@ -118,7 +123,11 @@ namespace nv {
         *ptr = value; //strex?
         nvCompilerReadWriteBarrier();
 #else
-#error "Atomics not implemented."
+//+DOGOT
+// Emscripten doesn't have a specific CPU.
+//#error "Atomics not implemented."
+    *ptr = value;
+//-DOGOT
 #endif
     }
     

@@ -7,7 +7,10 @@
 
 #include <float.h>
 
-#if !NV_CC_MSVC && !NV_OS_ORBIS
+//+DOGOT
+// Making this check more portable.
+#if __has_include(<alloca.h>)
+//-DOGOT
 #include <alloca.h>
 #endif
 

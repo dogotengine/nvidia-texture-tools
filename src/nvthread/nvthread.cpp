@@ -35,7 +35,10 @@ typedef BOOL(WINAPI *LPFN_GSI)(LPSYSTEM_INFO);
 typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
 
 static bool isWow64() {
-    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(GetModuleHandle("kernel32"), "IsWow64Process");
+    //+DOGOT
+    // String was not wrapped in TEXT macro so wide strings failed.
+    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(GetModuleHandle(TEXT("kernel32")), "IsWow64Process");
+    //-DOGOT
 
     BOOL wow64 = FALSE;
 
